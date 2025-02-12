@@ -1,8 +1,15 @@
 #include <QCoreApplication>
 
+// haven't test with SSL.
+#undef SIMPLE_HTTP_SERVER_SSL
+#include "simplehttpserver.h"
+
 int main(int argc, char *argv[])
 {
     QCoreApplication a(argc, argv);
+
+    SimpleHttpServer::instance()->setPort(54055)->start();
+
 
     // Set up code that uses the Qt event loop here.
     // Call a.quit() or a.exit() to quit the application.
