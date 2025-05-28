@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
     // 创建核心会话
     TCoreSession session;
     
-    // 注册读取文件的回调函数
-    session.registerCallback<Models::ReadFileRequest>("rf", 
+    // 注册读取文件的回调函数 - 不需要指定 functionName，自动从类型获取
+    session.registerCallback<Models::ReadFileRequest>( 
         [](int sequence, const Models::ReadFileRequest& request) -> Models::Response {
             qDebug() << "处理读取文件请求，序列号:" << sequence << "文件路径:" << request.filePath;
             

@@ -45,6 +45,8 @@ struct Response {
 
 // 具体业务模型示例 - 读取文件
 struct ReadFileRequest {
+    static constexpr const char* functionName = "rf";
+    
     QString filePath;
     
     static ReadFileRequest fromPayload(const QJsonValue& payload) {

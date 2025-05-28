@@ -27,9 +27,9 @@ public:
     template<typename PayloadType>
     using CallbackFunction = std::function<Models::Response(int sequence, const PayloadType& payload)>;
     
-    // 注册回调函数
+    // 注册回调函数 - 自动从 PayloadType 获取 functionName
     template<typename PayloadType>
-    void registerCallback(const QString& functionName, CallbackFunction<PayloadType> callback);
+    void registerCallback(CallbackFunction<PayloadType> callback);
 
 private slots:
     void onConnected();
@@ -54,8 +54,11 @@ private:
 
 // 模板函数实现
 template<typename PayloadType>
-void TCoreSession::registerCallback(const QString& functionName, CallbackFunction<PayloadType> callback)
+void TCoreSession::registerCallback(CallbackFunction<PayloadType> callback)
 {
+    // 从 PayloadType 获取 functionName
+    QString functionName = PayloadType::functionName;
+    
     // 包装用户回调函数，处理 JSON 到具体类型的转换
     InternalCallback internalCallback = [callback](int sequence, const QJsonValue& payload) -> Models::Response {
         try {
